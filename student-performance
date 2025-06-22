@@ -1,0 +1,92 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyNQVqseEMgFCxs/9L3otQgk",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/sherylmatthew/student-performance-predictor/blob/main/student-performance\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 1,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "eA3yiUP8WA7a",
+        "outputId": "352b2201-5b3e-43d1-bb81-f3c95913883e"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Accuracy: 1.0\n",
+            "              precision    recall  f1-score   support\n",
+            "\n",
+            "        True       1.00      1.00      1.00         1\n",
+            "\n",
+            "    accuracy                           1.00         1\n",
+            "   macro avg       1.00      1.00      1.00         1\n",
+            "weighted avg       1.00      1.00      1.00         1\n",
+            "\n",
+            "Pass\n"
+          ]
+        }
+      ],
+      "source": [
+        "import pandas as pd\n",
+        "import numpy as np\n",
+        "import matplotlib.pyplot as plt\n",
+        "import seaborn as sns\n",
+        "\n",
+        "from sklearn.model_selection import train_test_split\n",
+        "from sklearn.ensemble import RandomForestClassifier\n",
+        "from sklearn.metrics import classification_report, accuracy_score\n",
+        "data = {\n",
+        "    'gender': ['female', 'male', 'female', 'male', 'female'],\n",
+        "    'study_time': [2, 3, 1, 4, 2],\n",
+        "    'failures': [0, 1, 0, 2, 1],\n",
+        "    'absences': [4, 10, 2, 0, 6],\n",
+        "    'G1': [15, 12, 14, 10, 11],\n",
+        "    'G2': [14, 11, 15, 9, 10],\n",
+        "    'G3': [15, 12, 15, 8, 10]  # Final grade\n",
+        "}\n",
+        "df = pd.DataFrame(data)\n",
+        "df['gender'] = df['gender'].map({'female': 0, 'male': 1})\n",
+        "X = df[['gender', 'study_time', 'failures', 'absences', 'G1', 'G2']]\n",
+        "y = df['G3'] >= 10  # Pass (True) / Fail (False)\n",
+        "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n",
+        "model = RandomForestClassifier(random_state=42)\n",
+        "model.fit(X_train, y_train)\n",
+        "y_pred = model.predict(X_test)\n",
+        "print(\"Accuracy:\", accuracy_score(y_test, y_pred))\n",
+        "print(classification_report(y_test, y_pred))\n",
+        "# Example: Predict for a new student\n",
+        "sample = pd.DataFrame([[0, 2, 0, 3, 14, 15]], columns=X.columns)\n",
+        "prediction = model.predict(sample)\n",
+        "print(\"Pass\" if prediction[0] else \"Fail\")\n"
+      ]
+    }
+  ]
+}
