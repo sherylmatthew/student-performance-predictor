@@ -23,8 +23,7 @@ It’s built using Python, pandas, and scikit-learn, and is beginner-friendly wh
 
 ## 📂 Dataset
 
-We used the [Student Performance Dataset](https://www.kaggle.com/datasets/spscientist/students-performance-in-exams) from Kaggle. You can also simulate your own small dataset for testing purposes.
-
+ [Student Performance Dataset](https://www.kaggle.com/datasets/spscientist/students-performance-in-exams)
 ---
 
 ## 🧠 Machine Learning Pipeline
